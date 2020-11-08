@@ -1,10 +1,12 @@
 #include <stdio.h>
 #define len_a 4
 #define len_b 7
+#define len_c len_a + len_b
 
 void main(void)
 {
-    int pa=0, pb=0, pc=0, len_c = len_a + len_b;
+    int pa=0, pb=0, pc=0;
+    //len_c = len_a + len_b;
     int a[len_a] = {3, 5, 8, 11}; //sorted array
     int b[len_b] = {2, 6, 8, 9, 11, 15, 20}; //sorted array
     int c[len_c];

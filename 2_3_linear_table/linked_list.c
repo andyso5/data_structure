@@ -10,8 +10,6 @@ typedef struct LNode
 } LNode, * pList;
 
 
-
-
 int InitList(pList* p) // the first node has no valid data
 {
     *p = (pList)malloc(sizeof(LNode));
@@ -21,30 +19,53 @@ int InitList(pList* p) // the first node has no valid data
     return 0;
 }
 
-void DestroyList(pList p)
+void DestroyList(pList* p)
 {
+    pList tmp=NULL;
+    pList p_1 = *p;
 
+    while (p_1)
+    {
+        tmp = p_1;
+        p_1 = p_1->next;
+        free(tmp);
+    }
+
+    *p = NULL;
     return;
+
+
+
 }
 
-void ClearList(pList p)
+int ClearList(pList p)
 {
-    return;
+    if (!p) return 0;
+    pList i=p->next;
+    pList j=NULL;
+    p->next = NULL;
+    while (i)
+    {
+        j = i->next;
+        free(i);
+        i = j;
+// free just releases memory does not mean make addr invalid
+        
+    }
+    return 1;  
 }
 
 int ListEmpty(pList p) //为什么严蔚敏建议直接传List？
 {
-    if (p->var)
+    if (!p)
     {
+        printf("not valid");
         return 1;
     }
-    else
-    {
-        return 0;
-    }
+    if (p->next) return 0;
+    else return 1;
 }
     
-
 int ListLength(pList p, int * length) //为什么严蔚敏建议直接传List？
 {
     if (!p) return 0;
@@ -144,7 +165,13 @@ void main(void)
     printf("%d\n", res);
     int len = -1;
     ListLength(s, &len);
-    printf("list length: %d", len);
+    printf("list length: %d\n", len);
+    printf("empty list\n");
+    int m = -1;
+    // m = ClearList(s);
+    DestroyList(&s);
+    printf("m is %d\n", m);
+    printf("is empty: %d", ListEmpty(s));
 
 
 }
